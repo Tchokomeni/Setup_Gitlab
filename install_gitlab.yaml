@@ -1,0 +1,28 @@
+---
+- name: Installer GitLab
+  hosts: gitlab_instances
+  become: true
+  tasks:
+    - name: Mettre à jour les paquets
+      apt:
+        update_cache: yes
+
+    - name: Installer les dépendances
+      apt:
+        name: 
+          - curl
+          - openssh-server
+          - ca-certificates
+        state: present
+
+    - name: Ajouter le dépôt officiel GitLab
+      shell: |
+        curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
+
+    - name: Installer GitLab
+      apt:
+        name: gitlab-ce
+        state: present
+
+    - name: Configurer GitLab
+      shell: gitlab-ctl reconfigure

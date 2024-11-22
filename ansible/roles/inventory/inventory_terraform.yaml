@@ -1,6 +1,0 @@
-all:
-  hosts:
-    gitlab_server:
-      ansible_host: "{{ lookup('file', 'terraform/terraform_outputs.json') | from_json | json_query('public_ip.value') }}"
-      ansible_user: ubuntu
-      ansible_ssh_private_key_file: "~/.ssh/tchoko_key_gitlab.pem"
